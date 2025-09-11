@@ -27,7 +27,20 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     networks:
       - app-network
-
+      
+  backend-tests:
+    build:
+      context: ./backend
+    command: mvn test
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/my_database
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - app-network
+      
   postgres:
     image: postgres:15
     ports:
